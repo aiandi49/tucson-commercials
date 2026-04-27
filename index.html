@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tucson Commercials — Cinematic AI Video for Tucson Restaurants</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --off-white: #f8f6f2;
+    --light-gray: #f0ede8;
+    --mid-gray: #e2ddd6;
+    --text: #1a1814;
+    --text-mid: #4a4540;
+    --text-light: #8a8178;
+    --gold: #b8973a;
+    --gold-light: #d4ae55;
+    --gold-pale: #f5f0e4;
+    --accent: #2c2420;
+    --border: #e0dbd2;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--white); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 400; overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 60px; height: 72px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--accent); text-decoration: none; }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; color: var(--text-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { font-size: 13px; font-weight: 600; color: var(--white); background: var(--accent); padding: 10px 24px; text-decoration: none; border-radius: 2px; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--gold); }
+
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 60px 80px; background: var(--off-white); position: relative; overflow: hidden; }
+  .hero-bg-text { position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-family: 'Playfair Display', serif; font-size: 280px; font-weight: 700; color: rgba(184,151,58,0.05); line-height: 1; pointer-events: none; }
+  .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1fr 400px; gap: 80px; align-items: center; position: relative; z-index: 1; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; }
+  .hero-tag::before { content: ''; width: 32px; height: 1px; background: var(--gold); }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(48px, 6vw, 76px); font-weight: 700; line-height: 1.05; color: var(--accent); margin-bottom: 24px; }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-sub { font-size: 17px; font-weight: 300; color: var(--text-mid); line-height: 1.8; max-width: 460px; margin-bottom: 44px; }
+  .hero-actions { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .btn-primary { font-size: 13px; font-weight: 600; letter-spacing: 0.5px; color: var(--white); background: var(--accent); padding: 15px 32px; text-decoration: none; border-radius: 2px; transition: background 0.2s; display: inline-block; }
+  .btn-primary:hover { background: var(--gold); }
+  .btn-ghost { font-size: 13px; font-weight: 500; color: var(--text-mid); text-decoration: none; transition: color 0.2s; }
+  .btn-ghost:hover { color: var(--gold); }
+  .hero-stats { display: flex; gap: 40px; margin-top: 52px; padding-top: 32px; border-top: 1px solid var(--border); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 38px; font-weight: 700; color: var(--accent); line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+
+  .hero-card { background: var(--white); border: 1px solid var(--border); border-radius: 4px; box-shadow: 0 20px 60px rgba(0,0,0,0.08); overflow: hidden; }
+  .hc-header { background: var(--accent); padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .hc-title { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+  .hc-dot { width: 8px; height: 8px; background: #3fb950; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .hc-body { padding: 16px 24px; }
+  .pi { display: flex; align-items: center; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--light-gray); }
+  .pi:last-child { border-bottom: none; }
+  .pi-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--mid-gray); min-width: 28px; }
+  .pi-name { font-size: 13px; font-weight: 600; color: var(--accent); }
+  .pi-type { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+  .pi-badge { font-size: 10px; font-weight: 600; letter-spacing: 1px; padding: 3px 8px; border-radius: 2px; text-transform: uppercase; white-space: nowrap; }
+  .b-live { background: #e8f5e9; color: #2e7d32; }
+  .b-site { background: var(--gold-pale); color: var(--gold); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 60px; }
+  .section { padding: 100px 0; }
+  .section-alt { background: var(--off-white); }
+  .sec-tag { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .sec-tag::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+  .sec-title { font-family: 'Playfair Display', serif; font-size: clamp(34px, 4vw, 52px); font-weight: 700; line-height: 1.1; color: var(--accent); margin-bottom: 18px; }
+  .sec-title em { font-style: italic; color: var(--gold); }
+  .sec-desc { font-size: 16px; font-weight: 300; color: var(--text-mid); line-height: 1.8; max-width: 540px; margin-bottom: 56px; }
+
+  .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  .svc { background: var(--white); padding: 40px; border: 1px solid var(--border); position: relative; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s; }
+  .svc:hover { border-color: var(--gold); box-shadow: 0 8px 40px rgba(184,151,58,0.08); }
+  .svc-num { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 700; color: rgba(184,151,58,0.06); position: absolute; top: 12px; right: 20px; line-height: 1; }
+  .svc-icon { font-size: 28px; margin-bottom: 20px; }
+  .svc-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 12px; }
+  .svc-desc { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
+  .svc-meta { margin-top: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; color: var(--gold); }
+
+  .port-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .port-card { background: var(--white); border: 1px solid var(--border); padding: 30px 26px; transition: all 0.3s; }
+  .port-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+  .pc-num { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 700; color: var(--mid-gray); line-height: 1; margin-bottom: 14px; }
+  .pc-rest { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .pc-type { font-size: 12px; color: var(--text-light); margin-bottom: 16px; }
+  .pc-status { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; display: inline-block; }
+  .s-live { background: #e8f5e9; color: #2e7d32; }
+  .s-site { background: var(--gold-pale); color: var(--gold); }
+
+  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .proc { background: var(--white); border: 1px solid var(--border); padding: 32px 26px; position: relative; }
+  .proc::after { content: '→'; position: absolute; right: -16px; top: 50%; transform: translateY(-50%); font-size: 18px; color: var(--mid-gray); z-index: 1; }
+  .proc:last-child::after { display: none; }
+  .proc-num { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 700; color: var(--gold-pale); line-height: 1; margin-bottom: 16px; }
+  .proc-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--accent); margin-bottom: 10px; }
+  .proc-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .ci h3 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 14px; }
+  .ci p { font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 36px; }
+  .cd { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+  .cd-icon { width: 36px; height: 36px; background: var(--gold-pale); border: 1px solid var(--border); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .cd-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-light); }
+  .cd-value { font-size: 14px; color: var(--accent); margin-top: 2px; }
+
+  .cf { background: var(--white); border: 1px solid var(--border); padding: 44px 40px; border-radius: 4px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+  .cf-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+  .cf-sub { font-size: 13px; color: var(--text-light); margin-bottom: 32px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .fg { margin-bottom: 18px; }
+  .fg.full { grid-column: 1 / -1; }
+  .fl { display: block; font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-mid); margin-bottom: 7px; }
+  .fi, .fs, .ft { width: 100%; padding: 11px 14px; background: var(--off-white); border: 1px solid var(--border); border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+  .fi:focus, .fs:focus, .ft:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(184,151,58,0.1); background: var(--white); }
+  .ft { resize: vertical; min-height: 90px; }
+  .fs { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8178' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-color: var(--off-white); cursor: pointer; }
+  .fsub { width: 100%; padding: 15px; background: var(--accent); color: var(--white); border: none; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; margin-top: 6px; }
+  .fsub:hover { background: var(--gold); }
+  .fnote { font-size: 12px; color: var(--text-light); text-align: center; margin-top: 14px; }
+  .fsuccess { display: none; text-align: center; padding: 40px 20px; }
+  .fsuccess h4 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--accent); margin-bottom: 12px; }
+  .fsuccess p { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
+  .fsucc-icon { font-size: 48px; margin-bottom: 20px; }
+
+  footer { background: var(--accent); padding: 56px 60px; }
+  .fi-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .fb { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--white); }
+  .fb span { color: var(--gold); }
+  .flinks { display: flex; gap: 28px; list-style: none; }
+  .flinks a { font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+  .flinks a:hover { color: var(--gold); }
+  .fcopy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  @media(max-width:900px){
+    nav{padding:0 24px;}
+    .nav-links{display:none;}
+    .hero{padding:100px 24px 60px;}
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-card{display:none;}
+    .container{padding:0 24px;}
+    .section{padding:70px 0;}
+    .services-grid,.port-grid{grid-template-columns:1fr;}
+    .process-grid{grid-template-columns:1fr 1fr;}
+    .proc::after{display:none;}
+    .contact-grid{grid-template-columns:1fr;gap:40px;}
+    .form-row{grid-template-columns:1fr;}
+    footer{padding:40px 24px;}
+    .fi-inner{flex-direction:column;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Tucson <span>Commercials</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Started</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-text">TC</div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Tucson · Arizona</div>
+      <h1 class="hero-title">Your Restaurant,<br><em>On Screen.</em></h1>
+      <p class="hero-sub">Cinematic AI-powered commercials for Tucson restaurants. 15-second ads that stop the scroll, tell your story, and bring guests through the door.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Request Information</a>
+        <a href="#portfolio" class="btn-ghost">View Our Work →</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">10+</div><div class="stat-label">Videos Produced</div></div>
+        <div><div class="stat-num">6</div><div class="stat-label">Restaurants Featured</div></div>
+        <div><div class="stat-num">15s</div><div class="stat-label">Avg. Ad Length</div></div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hc-header">
+        <div class="hc-title">Live Portfolio</div>
+        <div class="hc-dot"></div>
+      </div>
+      <div class="hc-body">
+        <div class="pi"><div class="pi-num">01</div><div style="flex:1"><div class="pi-name">La Frida Mexican Grill</div><div class="pi-type">3 Videos · UGC + TV Spot</div></div><span class="pi-badge b-live">Live</span></div>
+        <div class="pi"><div class="pi-num">02</div><div style="flex:1"><div class="pi-name">Ra Sushi Bar</div><div class="pi-type">2 Videos · UGC + TV Spot</div></div><span class="pi-badge b-live">Live</span></div>
+        <div class="pi"><div class="pi-num">03</div><div style="flex:1"><div class="pi-name">Fleming's Steakhouse</div><div class="pi-type">1 Video · TV Spot</div></div><span class="pi-badge b-site">Site</span></div>
+        <div class="pi"><div class="pi-num">04</div><div style="flex:1"><div class="pi-name">Firebirds Wood Fired</div><div class="pi-type">1 Video · UGC</div></div><span class="pi-badge b-live">Live</span></div>
+        <div class="pi"><div class="pi-num">05</div><div style="flex:1"><div class="pi-name">Hacienda del Sol</div><div class="pi-type">2 Videos · UGC + TV Spot</div></div><span class="pi-badge b-live">Live</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <div class="sec-tag">What We Do</div>
+    <h2 class="sec-title">Cinematic Video, <em>Simplified.</em></h2>
+    <p class="sec-desc">AI-powered restaurant commercials that look like they cost $10,000 — delivered fast, at a fraction of the price.</p>
+    <div class="services-grid">
+      <div class="svc"><div class="svc-num">01</div><div class="svc-icon">🎬</div><div class="svc-name">UGC Testimonial</div><div class="svc-desc">Authentic-feeling customer testimonial videos. A stunning spokesperson speaks directly to camera about your restaurant. Perfect for Instagram Reels and TikTok.</div><div class="svc-meta">9:16 · 8 Seconds · Mobile-First</div></div>
+      <div class="svc"><div class="svc-num">02</div><div class="svc-icon">📺</div><div class="svc-name">TV Spot</div><div class="svc-desc">Cinematic 15-second broadcast-quality commercials. Opening shots, food close-ups, atmosphere, and a powerful closing statement. Built for your website and in-person pitches.</div><div class="svc-meta">16:9 · 15 Seconds · Broadcast Quality</div></div>
+      <div class="svc"><div class="svc-num">03</div><div class="svc-icon">📱</div><div class="svc-name">Social Reel Package</div><div class="svc-desc">A bundle of 3 short-form vertical videos optimized for Instagram, Facebook, and TikTok. Multiple angles — testimonial, reaction shot, and brand moment.</div><div class="svc-meta">3-Video Bundle · 9:16 · Reels-Ready</div></div>
+      <div class="svc"><div class="svc-num">04</div><div class="svc-icon">✨</div><div class="svc-name">Custom Campaign</div><div class="svc-desc">Full restaurant campaign — multiple videos across all formats, tailored to a specific promotion, season, or event. Ideal for grand openings and special events.</div><div class="svc-meta">Custom Scope · All Formats · Full Campaign</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="portfolio">
+  <div class="container">
+    <div class="sec-tag">The Work</div>
+    <h2 class="sec-title">Tucson Restaurants, <em>On Screen.</em></h2>
+    <p class="sec-desc">Every video was produced for a real Tucson restaurant. Watch them on our Instagram @tucsoncommercials.</p>
+    <div class="port-grid">
+      <div class="port-card"><div class="pc-num">01</div><div class="pc-rest">La Frida Mexican Grill</div><div class="pc-type">Mexican · Upscale · 3 Videos Produced</div><span class="pc-status s-live">✓ Instagram Live</span></div>
+      <div class="port-card"><div class="pc-num">02</div><div class="pc-rest">Ra Sushi Bar Restaurant</div><div class="pc-type">Japanese · Upscale · 2 Videos Produced</div><span class="pc-status s-live">✓ Instagram Live</span></div>
+      <div class="port-card"><div class="pc-num">03</div><div class="pc-rest">Fleming's Prime Steakhouse</div><div class="pc-type">American · Fine Dining · 1 TV Spot</div><span class="pc-status s-site">Website Portfolio</span></div>
+      <div class="port-card"><div class="pc-num">04</div><div class="pc-rest">El Sur Mexican Restaurant</div><div class="pc-type">Mexican · Casual · 1 Video Produced</div><span class="pc-status s-live">✓ Instagram Live</span></div>
+      <div class="port-card"><div class="pc-num">05</div><div class="pc-rest">Firebirds Wood Fired Grill</div><div class="pc-type">American · Upscale · 1 Video Produced</div><span class="pc-status s-live">✓ Instagram Live</span></div>
+      <div class="port-card"><div class="pc-num">06</div><div class="pc-rest">The Grill at Hacienda del Sol</div><div class="pc-type">Southwestern · Fine Dining · 2 Videos</div><span class="pc-status s-live">✓ Instagram Live</span></div>
+    </div>
+    <div style="text-align:center;margin-top:48px;"><a href="https://instagram.com/tucsoncommercials" target="_blank" class="btn-primary">Watch on @tucsoncommercials</a></div>
+  </div>
+</section>
+
+<section class="section" id="process">
+  <div class="container">
+    <div class="sec-tag">How It Works</div>
+    <h2 class="sec-title">Simple. <em>Fast. Cinematic.</em></h2>
+    <p class="sec-desc">From your first inquiry to a finished commercial — the process is built for busy restaurant owners.</p>
+    <div class="process-grid">
+      <div class="proc"><div class="proc-num">01</div><div class="proc-title">You Reach Out</div><div class="proc-desc">Fill out the form or DM us on Instagram. Tell us about your restaurant and what you're looking for.</div></div>
+      <div class="proc"><div class="proc-num">02</div><div class="proc-title">We Create Your Ad</div><div class="proc-desc">We write the script, build the scene, and produce your cinematic commercial using your restaurant's own imagery.</div></div>
+      <div class="proc"><div class="proc-num">03</div><div class="proc-title">You Review It</div><div class="proc-desc">We send you the finished video. You watch it, love it, and give us feedback if anything needs adjusting.</div></div>
+      <div class="proc"><div class="proc-num">04</div><div class="proc-title">You Post It</div><div class="proc-desc">Upload to Instagram, Facebook, TikTok, or your website. Your restaurant is now on screen — professionally.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="ci">
+        <div class="sec-tag">Get In Touch</div>
+        <h2 class="sec-title">Let's Put <em>Your Restaurant</em> On Screen.</h2>
+        <p>No pricing upfront. No commitment required. Fill out the form and we'll reach out within 24 hours to discuss what we can create for you.</p>
+        <div class="cd"><div class="cd-icon">📍</div><div><div class="cd-label">Location</div><div class="cd-value">Tucson, Arizona · East Side</div></div></div>
+        <div class="cd"><div class="cd-icon">📱</div><div><div class="cd-label">Instagram</div><div class="cd-value">@tucsoncommercials</div></div></div>
+        <div class="cd"><div class="cd-icon">🏢</div><div><div class="cd-label">Company</div><div class="cd-value">VTREI LLC · Tucson, AZ</div></div></div>
+      </div>
+
+      <div class="cf">
+        <div id="formContent">
+          <div class="cf-title">Request Information</div>
+          <div class="cf-sub">We respond within 24 hours</div>
+          <div class="form-row">
+            <div class="fg"><label class="fl">First Name *</label><input type="text" class="fi" id="firstName" placeholder="John" required></div>
+            <div class="fg"><label class="fl">Last Name *</label><input type="text" class="fi" id="lastName" placeholder="Smith" required></div>
+          </div>
+          <div class="fg"><label class="fl">Email Address *</label><input type="email" class="fi" id="email" placeholder="john@yourrestaurant.com" required></div>
+          <div class="fg"><label class="fl">Phone Number</label><input type="tel" class="fi" id="phone" placeholder="(520) 555-0000"></div>
+          <div class="fg"><label class="fl">Restaurant Name *</label><input type="text" class="fi" id="restaurantName" placeholder="Your Restaurant Name" required></div>
+          <div class="fg">
+            <label class="fl">Restaurant Type</label>
+            <select class="fs" id="restaurantType">
+              <option value="">Select cuisine type...</option>
+              <option>Mexican / Tex-Mex</option>
+              <option>American / Grill</option>
+              <option>Italian</option>
+              <option>Japanese / Sushi</option>
+              <option>Steakhouse / Fine Dining</option>
+              <option>Seafood</option>
+              <option>Brunch / Café</option>
+              <option>BBQ</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="fl">Service Interested In</label>
+            <select class="fs" id="serviceType">
+              <option value="">Select a service...</option>
+              <option>UGC Testimonial Video</option>
+              <option>TV Spot (15s Cinematic)</option>
+              <option>Social Reel Package (3 Videos)</option>
+              <option>Custom Campaign</option>
+              <option>Not Sure — Tell Me More</option>
+            </select>
+          </div>
+          <div class="fg"><label class="fl">Tell Us About Your Restaurant</label><textarea class="ft" id="message" placeholder="What makes your restaurant special? Any upcoming events or promotions?"></textarea></div>
+          <button type="button" class="fsub" onclick="submitForm()">Send My Inquiry →</button>
+          <div class="fnote">No pricing until you've seen the quality. Promise.</div>
+        </div>
+
+        <div class="fsuccess" id="formSuccess">
+          <div class="fsucc-icon">✅</div>
+          <h4>We Got Your Inquiry!</h4>
+          <p>Thank you for reaching out. We'll get back to you within 24 hours.<br><br>In the meantime, check out our work on Instagram <strong>@tucsoncommercials</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fi-inner">
+    <div class="fb">Tucson <span>Commercials</span></div>
+    <ul class="flinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://instagram.com/tucsoncommercials" target="_blank">Instagram</a></li>
+    </ul>
+    <div class="fcopy">© 2026 VTREI LLC · Tucson, Arizona</div>
+  </div>
+</footer>
+
+<script>
+// ── LEAD CAPTURE ──
+// Leads are saved to localStorage until a backend is connected.
+// To view all leads: open browser console → type showLeads()
+// To export leads: open browser console → type exportLeads()
+
+function submitForm() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName  = document.getElementById('lastName').value.trim();
+  const email     = document.getElementById('email').value.trim();
+  const restaurant = document.getElementById('restaurantName').value.trim();
+
+  if (!firstName || !lastName || !email || !restaurant) {
+    alert('Please fill in all required fields marked with *');
+    return;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  const lead = {
+    id: Date.now(),
+    date: new Date().toLocaleString(),
+    timestamp: new Date().toISOString(),
+    firstName,
+    lastName,
+    email,
+    phone:          document.getElementById('phone').value.trim(),
+    restaurantName: restaurant,
+    restaurantType: document.getElementById('restaurantType').value,
+    serviceType:    document.getElementById('serviceType').value,
+    message:        document.getElementById('message').value.trim(),
+    status: 'new'
+  };
+
+  // Save to localStorage (replace with API call when backend ready)
+  const leads = JSON.parse(localStorage.getItem('tc_leads') || '[]');
+  leads.unshift(lead); // newest first
+  localStorage.setItem('tc_leads', JSON.stringify(leads));
+
+  // Show success state
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+
+// Console helpers for Lamar
+window.showLeads = () => {
+  const leads = JSON.parse(localStorage.getItem('tc_leads') || '[]');
+  console.log(`Total leads: ${leads.length}`);
+  console.table(leads.map(l => ({
+    Date: l.date,
+    Name: `${l.firstName} ${l.lastName}`,
+    Email: l.email,
+    Phone: l.phone,
+    Restaurant: l.restaurantName,
+    Type: l.restaurantType,
+    Service: l.serviceType,
+    Status: l.status
+  })));
+  return leads;
+};
+
+window.exportLeads = () => {
+  const leads = JSON.parse(localStorage.getItem('tc_leads') || '[]');
+  if (!leads.length) { console.log('No leads yet.'); return; }
+  const headers = ['Date','First Name','Last Name','Email','Phone','Restaurant','Cuisine','Service','Message','Status'];
+  const rows = leads.map(l => [l.date, l.firstName, l.lastName, l.email, l.phone, l.restaurantName, l.restaurantType, l.serviceType, l.message, l.status]);
+  const csv = [headers, ...rows].map(r => r.map(v => `"${(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = `tucson_commercials_leads_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  console.log(`Exported ${leads.length} leads.`);
+};
+
+window.clearLeads = () => { localStorage.removeItem('tc_leads'); console.log('Leads cleared.'); };
+</script>
+
+</body>
+</html>
