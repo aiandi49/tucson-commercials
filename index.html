@@ -324,17 +324,18 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ── LEAD CAPTURE ──
-// Leads are saved to localStorage until a backend is connected.
-// To view all leads: open browser console → type showLeads()
-// To export leads: open browser console → type exportLeads()
+// ── SUPABASE CONFIG ──
+const SUPABASE_URL = 'https://davnzvbntozffndryvmr.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhdm56dmJudG96ZmZuZHJ5dm1yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyNjM4MTcsImV4cCI6MjA5MjgzOTgxN30.iNCzSDzRh1pkyWmCR1fISMLpSL7i_htos8E98FjvjOE';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-function submitForm() {
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName  = document.getElementById('lastName').value.trim();
-  const email     = document.getElementById('email').value.trim();
-  const restaurant = document.getElementById('restaurantName').value.trim();
+async function submitForm() {
+  const firstName    = document.getElementById('firstName').value.trim();
+  const lastName     = document.getElementById('lastName').value.trim();
+  const email        = document.getElementById('email').value.trim();
+  const restaurant   = document.getElementById('restaurantName').value.trim();
 
   if (!firstName || !lastName || !email || !restaurant) {
     alert('Please fill in all required fields marked with *');
@@ -346,62 +347,35 @@ function submitForm() {
     return;
   }
 
-  const lead = {
-    id: Date.now(),
-    date: new Date().toLocaleString(),
-    timestamp: new Date().toISOString(),
-    firstName,
-    lastName,
-    email,
-    phone:          document.getElementById('phone').value.trim(),
-    restaurantName: restaurant,
-    restaurantType: document.getElementById('restaurantType').value,
-    serviceType:    document.getElementById('serviceType').value,
-    message:        document.getElementById('message').value.trim(),
-    status: 'new'
-  };
+  // Disable button while submitting
+  const btn = document.querySelector('.fsub');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
 
-  // Save to localStorage (replace with API call when backend ready)
-  const leads = JSON.parse(localStorage.getItem('tc_leads') || '[]');
-  leads.unshift(lead); // newest first
-  localStorage.setItem('tc_leads', JSON.stringify(leads));
+  const { error } = await supabase.from('leads').insert([{
+    first_name:      firstName,
+    last_name:       lastName,
+    email:           email,
+    phone:           document.getElementById('phone').value.trim(),
+    restaurant_name: restaurant,
+    restaurant_type: document.getElementById('restaurantType').value,
+    service_type:    document.getElementById('serviceType').value,
+    message:         document.getElementById('message').value.trim(),
+    status:          'new'
+  }]);
 
-  // Show success state
+  if (error) {
+    console.error('Supabase error:', error);
+    alert('Something went wrong. Please try again or DM us on Instagram @tucsoncommercials');
+    btn.textContent = 'Send My Inquiry →';
+    btn.disabled = false;
+    return;
+  }
+
+  // Show success
   document.getElementById('formContent').style.display = 'none';
   document.getElementById('formSuccess').style.display = 'block';
 }
-
-// Console helpers for Lamar
-window.showLeads = () => {
-  const leads = JSON.parse(localStorage.getItem('tc_leads') || '[]');
-  console.log(`Total leads: ${leads.length}`);
-  console.table(leads.map(l => ({
-    Date: l.date,
-    Name: `${l.firstName} ${l.lastName}`,
-    Email: l.email,
-    Phone: l.phone,
-    Restaurant: l.restaurantName,
-    Type: l.restaurantType,
-    Service: l.serviceType,
-    Status: l.status
-  })));
-  return leads;
-};
-
-window.exportLeads = () => {
-  const leads = JSON.parse(localStorage.getItem('tc_leads') || '[]');
-  if (!leads.length) { console.log('No leads yet.'); return; }
-  const headers = ['Date','First Name','Last Name','Email','Phone','Restaurant','Cuisine','Service','Message','Status'];
-  const rows = leads.map(l => [l.date, l.firstName, l.lastName, l.email, l.phone, l.restaurantName, l.restaurantType, l.serviceType, l.message, l.status]);
-  const csv = [headers, ...rows].map(r => r.map(v => `"${(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
-  const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = `tucson_commercials_leads_${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
-  console.log(`Exported ${leads.length} leads.`);
-};
-
-window.clearLeads = () => { localStorage.removeItem('tc_leads'); console.log('Leads cleared.'); };
 </script>
 
 </body>
